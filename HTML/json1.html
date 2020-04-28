@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        td,th{
+        border:1px solid black;
+        }
+    </style>
+</head>
+<body style="border:2px">
+<table style="border:1px solid black">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Salary</th>
+
+    </tr>
+    </thead>
+<tbody style="border:2px">
+<script>
+    var personArray = {
+    "employees":[
+    {"name":"namitha","age":21,"salary":20000},
+    {"name":"divya","age":23,"salary":30000},
+    {"name":"anu","age":28,"salary":40000}]
+    };
+
+    for(var i=0;i<personArray.employees.length;i++){
+    document.write("<tr><td>"+personArray.employees[i].name+"</td>"+
+    "<td>"+personArray.employees[i].age+"</td>"+
+    "<td>"+personArray.employees[i].salary+"</td>");
+    }
+</script>
+    </tbody>
+    </table>
+</body>
+</html>

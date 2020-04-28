@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body div div div{
+        width:15%;
+        height:100%
+        border-radius:16px;
+        border: 1px solid block;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <input type="button" onclick="start()" value="Start" />
+    <br><br><input type="button" onclick="stop()" value="Stop" />
+    <div class="row">
+        <div class="col-12 div1">
+
+        </div>
+        <div class="col-12 div2">
+
+        </div>
+        <div class="col-12 div3">
+
+        </div>
+    </div>
+
+</div>
+<script>
+    var intervalObj;
+    var count=0;
+    function timer(){
+    if(count==0){
+    document.querySelector(".div1").style.backgroundColor=green;
+    document.querySelector(".div2").style.backgroundColor=red;
+    document.querySelector(".div3").style.backgroundColor=yellow;
+    count++;
+    }
+    else{
+     document.querySelector(".div1").style.backgroundColor=white;
+     document.querySelector(".div2").style.backgroundColor=red;
+     document.querySelector(".div3").style.backgroundColor=white;
+     count--;
+     }
+
+    }
+
+    function start(){
+    }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,252 @@
+var app=angular.module("ResvtuApp",["ngRoute","ngCookies","vcRecaptcha","ngtweet",'ezfb','ui.router','ui.router.state.events','ngTable','angular-google-adsense'])
+app.constant("CSRF_TOKEN",jQuery('meta[name=csrf-token]').attr('content'));app.config(function($routeProvider,$urlRouterProvider,$locationProvider,$httpProvider,$stateProvider,ezfbProvider){ezfbProvider.setInitParams({appId:'270936753367928',version:'v2.11'});$urlRouterProvider.rule(function($injector,$location){var path=$location.url();if(path!='/'&&path.slice(-1)==='/'){$location.replace().path(path.slice(0,-1));}
+if(path.indexOf('/?')>-1){return path.replace('/?','?');}});$locationProvider.html5Mode({enabled:true,requireBase:false});var today=new Date();var date=today.getDate()+today.getMonth()+today.getFullYear()+'5.2';$stateProvider.state("home",{url:"/",title:"",views:{"banner":{templateUrl:"/templates/usnform.html"+'?12'+date,controller:"usnCtrl"}}}).state("home-page",{url:"/home",title:"",views:{"banner":{templateUrl:"/templates/usnform.html"+'?12'+date,controller:"usnCtrl"}}}).state("colleges",{url:"/colleges",title:"Colleges",views:{"content-left":{title:"Colleges",template:"<div ng-show='loading == false'><form class='form-inline'><label>Search :- &nbsp;</label><input ng-model='search_college' type='text' name='' class=' form-control' /></form></div><br/>"
++'<div ng-bind-html="comHtml" compile-template></div>'
++"<div ng-show='loading == false' ng-repeat='(ykey,y) in regions'>"
++"<div class='table_bfr_header'>{{ y }}</div><table class='table no-wrap-table table-hover'><tr><th>College Name</th><th>Code</th></tr><tbody><tr ng-repeat='x in colleges | filter:{ region_type: ykey, name_of_the_college : search_college }'><td>{{ x.name_of_the_college }}</td><td>{{ x.region_type }}{{ x.code }}</td></tr></tbody></table>"
++"</div></div>",controller:"CollegeCtrl"},"content-right":{templateUrl:"/templates/rightmodule.html"+'?'+date,controller:"rightModuleCtrl"}}}).state("courses",{url:"/courses",title:"Courses",views:{"content-left":{template:'<div ng-bind-html="comHtml" compile-template></div>'
++'<div ng-show="loading == false && courses!=\'\'" class="table_bfr_header">Courses</div>'
++'<table ng-if="courses!=\'\'" class="table table-hover no-wrap-table">'+"<tr><th>Course Name</th><th>Code</th></tr><tbody><tr ng-repeat='x in courses'><td>{{ x.branch_name }}</td><td>{{ x.branch_code }}</td></tr></tbody></table>"
++"</div>",controller:"CoursesCtrl"},"content-right":{templateUrl:"/templates/rightmodule.html"+'?'+date,controller:"rightModuleCtrl"}}}).state("disclaimer",{url:"/disclaimer",title:"Disclaimer",views:{"content-left":{templateUrl:"/templates/dis.html"+'?'+date},"content-right":{templateUrl:"/templates/rightmodule.html"+'?'+date,controller:"rightModuleCtrl"}}}).state("contact",{url:"/contact",title:"Contact",views:{"content-left":{templateUrl:"/contactform"+'?'+date,controller:"ContactCtrl"},"content-right":{templateUrl:"/templates/rightmodule.html"+'?'+date,controller:"rightModuleCtrl"}}}).state("cbcs-mark-result",{url:"/cbcs-mark-result",title:"CBCS Marks Result",cbcspage:3,views:{"banner":{templateUrl:"/templates/usnform.html"+'?'+date,controller:"usnCtrl",}}}).state("cbcs-result",{url:"/cbcs-result",title:"CBCS Result",cbcspage:3,views:{"banner":{templateUrl:"/templates/usnform.html"+'?'+date,controller:"usnCtrl",}}}).state("non-cbcs-result",{url:"/non-cbcs-result",title:"NON CBCS Result",cbcspage:1,views:{"banner":{templateUrl:"/templates/usnform.html"+'?'+date,controller:"usnCtrl",}}}).state("resultsusn",{url:"/results/:usn",title:"Results",views:{"content-left":{templateUrl:"/templates/results.html"+'?'+date,controller:"resultsCtrl"},"content-right":{templateUrl:"/templates/rightmodule.html"+'?'+date,controller:"rightModuleCtrl"}}}).state("resultbysem",{url:"/result/:usn/sem-:sem/rs-:year",title:"Resultsbysem",views:{"content-left":{templateUrl:"/templates/resultsem.html"+'?'+date,controller:"resultSemCtrl"},"content-right":{templateUrl:"/templates/rightmodule.html"+'?'+date,controller:"rightModuleCtrl"}}}).state("resultbyyear",{url:"/results-by-year/:usn/:year",title:"Student Result",views:{"content-left":{templateUrl:"/templates/result.html"+'?'+date,controller:"resultYearCtrl"},"content-right":{templateUrl:"/templates/rightmodule.html"+'?'+date,controller:"rightModuleCtrl"}}}).state("resultcbseyear",{url:"/resultcbse/:usn/:year",title:"Student Cbse Result",views:{"content-left":{templateUrl:"/templates/cbresult.html"+'?'+date,controller:"resultCbseCtrl"},"content-right":{templateUrl:"/templates/rightmodule.html"+'?'+date,controller:"rightModuleCtrl"}}}).state("resultscbse",{url:"/resultscbse/:usn",title:"CBCS Results",views:{"content-left":{templateUrl:"/templates/cbresults.html"+'?'+date,controller:"resultsCbseCtrl"},"content-right":{templateUrl:"/templates/rightmodule.html"+'?'+date,controller:"rightModuleCtrl"}}}).state("resultcbseclass",{url:"/resultCbseClass/:usn/sem-:sem/:year",title:"Student Cbse Class Result",views:{"content-left":{templateUrl:"/templates/cbclassresult.html"+'?'+date,controller:"resultCbseClsCtrl"},"content-right":{templateUrl:"/templates/rightmodule.html"+'?'+date,controller:"rightModuleCtrl"}}}).state("timetables",{url:"/time-table/:timetableid",title:"Vtu Time table May/June 2018",views:{"content-left":{templateUrl:"/templates/timetable.html"+'?'+date,controller:"TimetableCtrl"},"content-right":{templateUrl:"/templates/rightmodule.html"+'?'+date,controller:"rightModuleCtrl"}}}).state("resultbyclass",{url:"/results-by-class/:usn/:sem/:year",title:"Result by class",views:{"content-left":{templateUrl:"/templates/classresult.html"+'?'+date,controller:"ClassresultCtrl"},"content-right":{templateUrl:"/templates/rightmodule.html"+'?'+date,controller:"rightModuleCtrl"}}}).state("resultcbsebysem",{url:"/resultscbsesem/:usn/sem-:sem/rs-:year",title:"CBCS Result by Sem",views:{"content-left":{templateUrl:"/templates/resultcbsebysem.html"+'?'+date,controller:"resultcbseBysemCtrl"},"content-right":{templateUrl:"/templates/rightmodule.html"+'?'+date,controller:"rightModuleCtrl"}}}).state("article",{url:"/updates/:catgory/:article",views:{"content-left":{templateUrl:"/templates/article.html"+'?'+date,controller:"articleCtrl"},"content-right":{templateUrl:"/templates/rightmodule.html"+'?'+date,controller:"rightModuleCtrl"}}}).state("updates",{url:"/updates?page",title:"Vtu4u Updates",reloadOnSearch:true,views:{"content-left":{templateUrl:"/templates/articles.html"+'?'+date,controller:"articlesCtrl"},"content-right":{templateUrl:"/templates/rightmodule.html"+'?'+date,controller:"rightModuleCtrl"}}}).state("otherwise",{url:"*path",views:{"banner":{templateUrl:"/templates/error-not-found.html"+'?'+date}}});}).filter('decode_html_entities',function(){return function(input){var y=document.createElement('textarea');y.innerHTML=input;return y.value;}}).directive('compileTemplate',function($compile,$parse){return{link:function(scope,element,attr){var parsed=$parse(attr.ngBindHtml);function getStringValue(){return(parsed(scope)||'').toString();}
+scope.$watch(getStringValue,function(){$compile(element,null,-9999)(scope);});}}}).directive('clickAnywhereButHere',function($document){directiveDefinitionObject={link:{pre:function(scope,element,attrs,controller){},post:function(scope,element,attrs,controller){onClick=function(event){var isChild=element.has(event.target).length>0;var isSelf=element[0]==event.target;var isInside=isChild||isSelf;if(!isInside){scope.$apply(attrs.clickAnywhereButHere)}}
+$document.click(onClick)}}}
+return directiveDefinitionObject}).run(['$rootScope','$location','$window','$sce','$route','$anchorScroll','$http','CSRF_TOKEN','$state',function($rootScope,$location,$window,$sce,$route,$anchorScroll,$http,CSRF_TOKEN,$state){$rootScope.encode=function(a){return window.btoa(a);}
+$http.defaults.headers.common['X-CSRF-TOKEN']=CSRF_TOKEN;$http.defaults.headers.common["X-Requested-With"]="XMLHttpRequest"
+$rootScope.subject='1';$rootScope.reporturl='';$rootScope.decode=function(){return window.atob(a);}
+$rootScope.round=function(value,exp){if(typeof exp==='undefined'||+exp===0)
+return Math.round(value);value=+value;exp=+exp;if(isNaN(value)||!(typeof exp==='number'&&exp%1===0))
+return NaN;value=value.toString().split('e');value=Math.round(+(value[0]+'e'+(value[1]?(+value[1]+exp):exp)));value=value.toString().split('e');return+(value[0]+'e'+(value[1]?(+value[1]-exp):-exp));}
+$rootScope.getsgpa=function(prec){if(prec!=0.00&&prec!=null)
+return $rootScope.round((prec/10)+0.75);else
+return 'N/A';}
+$rootScope.get_sem_class=function(result_class){result_class_temp=result_class.trim().toLowerCase();if(result_class_temp=='fail'){return 'bg-danger';}else if(result_class_temp.indexOf('first')>=0){return 'bg-success';}else if(result_class_temp.indexOf('second')>=0){return 'bg-warning';}else{return 'bg-info';}}
+$rootScope.getClassText=function(result_class){result_class_temp=result_class.trim().toLowerCase();result_class=result_class==""?"N/A":result_class;if(result_class_temp=='fail'){return $sce.trustAsHtml('<b class="text-danger">'+result_class+'</b>');}else if(result_class_temp.indexOf('first')>=0){return $sce.trustAsHtml('<b class="text-success">'+result_class+'</b>');}else if(result_class_temp.indexOf('second')>=0){return $sce.trustAsHtml('<b class="text-warning">'+result_class+'</b>');}else{return $sce.trustAsHtml('<b>'+result_class+'</b>');}}
+$rootScope.ajError=false;$rootScope.reload=function(){$state.reload();}
+$rootScope.show_top_ads=false;$rootScope.getgrade=function(point,code,result){scheme=code.substring(0,2);var nocredit=['MATDIP31','MATDIP41','CIV18','CIV28','CIP28','CIP18','ENG18','ENG28','CPH18','CPH28','KKM39','KKK39','CPH39'];if(nocredit.indexOf(code.substring(2).toUpperCase())!=-1&&result=='P'){return 'P';}
+if(scheme=='17'){switch(point){case 0:return 'F';break;case 4:return 'E';break;case 6:return 'D';break;case 7:return 'C';break;case 8:return 'B';break;case 9:return 'A';break;case 10:return 'S';break;default:return 'F';break;}}else{switch(point){case 0:return 'F';break;case 4:return 'E';break;case 5:return 'D';break;case 6:return 'C';break;case 7:return 'B';break;case 8:return 'A';break;case 9:return 'S';break;case 10:return 'S+';break;default:return 'F';break;}}}
+$rootScope.report=function(){$rootScope.subject='3';$rootScope.reporturl=$location.path();$location.path('/contact');}
+$rootScope.ajErrorMsg="<div ng-show='loading == false && ajError' class='ajError'><h2 class='error-head'>Error : Problem with Establish Connection / Connection Time out  </h2><br/>"
++"<h3> The reason of errors is one of the following :-</h3>"
++'<ul class="reason">'
++'<li>Connection time out, You can retry again (This might happen when server is busy)</li>'
++'<li>Unable to Connect to the internet Please check your internet</li>'
++'<li>If you continue to get the same error please report</li>'
++'</ul>'
++'<br/>'
++'<div class="text-left">'
++'<a ng-click="reload()" href="javascript:void(0)" class="btn btn-danger">Retry</a>&nbsp;'
++'<a ng-click="report()" href="javascript:void(0)" class="btn btn-primary">Report</a>'
++'</div></div>';$rootScope.trustAsHtml=function(inputhtml){return $sce.trustAsHtml(inputhtml);}
+$rootScope.comHtml=$sce.trustAsHtml("<div ng-show='loading' style='min-height: 600px;'>"
++"<div class='sk-folding-cube'>"
++"<div class='sk-cube1 sk-cube'></div>"
++"<div class='sk-cube2 sk-cube'></div>"
++"<div class='sk-cube4 sk-cube'></div>"
++"<div class='sk-cube3 sk-cube'></div>"
++"</div>"
++"</div>"+$rootScope.ajErrorMsg);$window.ga('create','UA-104543193-1','auto');$rootScope.Changetitle=function(tl){$rootScope.title=tl+" - Vtu4u";}
+$rootScope.srequest=false;$rootScope.usercancel=false;$rootScope.$on('$stateChangeStart',function(event,toState,toParams,fromState,fromParams){$rootScope.cur_usntype="";if(toState.title!=undefined)
+$rootScope.title=toState.title!=""?(toState.title+" - VTU4U"):"VTU4U - VTU Results | Class Rank | Previous SEM Results";if(toState.cbcspage!=undefined)
+$rootScope.getcbcspage=toState.cbcspage;if(toState.usercancel==true)
+toState.usercancel=false;$anchorScroll.yOffset=0;if($rootScope.srequest)
+if($rootScope.srequest.cancel){$rootScope.usercancel=true;$rootScope.srequest.cancel.resolve();}
+$rootScope.srequest=false;$anchorScroll();$window.ga('send','pageview',$location.path());});}]);app.controller('articlesCtrl',function($scope,$location,$http,$window,$filter){$scope.ajError=false;$scope.loading=true;$scope.articles=[];$scope.page=$location.search().page==undefined?1:$location.search().page;$http.get($location.path()+'/get?page='+$scope.page).then(function(response){if(response.data.mismatch=='1')
+$window.location.reload();$scope.articles=response.data;$scope.loading=false;},function(error){$scope.ajError=true;$scope.loading=false;});})
+app.controller('articleCtrl',function($scope,$location,$http,$window,$filter){$scope.ajError=false;$scope.loading=true;$scope.article=[];$http.get($location.path()+'/get').then(function(response){if(response.data.mismatch=='1')
+$window.location.reload();if(response.data.content==null){$location.path('/404');return false;}
+$scope.article=response.data;if($scope.article.extras!=undefined&&$scope.article.extras&&$scope.article.extras.meta_title!="")
+$scope.Changetitle($scope.article.extras.meta_title);else
+$scope.Changetitle($scope.article.title);$scope.article.content=$scope.trustAsHtml($scope.article.content);$scope.loading=false;},function(error){$scope.ajError=true;$scope.loading=false;});});app.controller('TimetableCtrl',function($scope,$location,$http,$cookieStore,$window,$filter){$scope.ajError=false;$scope.loading=true;$scope.timetable="";$scope.my_scheme="";$scope.my_sem="";$scope.my_scheme_key=0;$scope.inCart=[];$scope.is_create_table=false;$scope.view_is_backtotable=true;if($scope.inCart.length==0){$scope.inCart=$cookieStore.get("mytable")!=undefined?$cookieStore.get("mytable"):[];if($scope.inCart.length>0)
+$scope.is_create_table=true;}
+$scope.checkremove=function(data){return $scope.inCart.indexOf(data)!==-1;}
+$scope.addtomytable=function(data){if($scope.inCart.indexOf(data)!==-1){$scope.inCart.splice($scope.inCart.indexOf(data),1);}else{$scope.inCart.push(data);}
+$cookieStore.put("mytable",$scope.inCart);$scope.updatecart()
+$scope.$apply();}
+$scope.updatecart=function(){for(i=0;i<$scope.timetable.time_table_date_org.length;i++){$scope.timetable.time_table_date_org[i].is_add=$scope.inCart.indexOf($scope.timetable.time_table_date_org[i].time_date_id)!==-1?true:false;}
+$scope.freload();}
+$scope.getSortBy=function(data,key){return $filter('ugroupBy')(data,key);}
+$scope.reindex_array_keys=function(array,start){var temp=[];start=typeof start=='undefined'?0:start;start=typeof start!='number'?0:start;for(var i in array){temp[start++]=array[i];}
+return temp;}
+$scope.showmytable=function(){$scope.view_is_backtotable=false;$scope.freload();}
+$scope.backtotable=function(){$scope.is_create_table=true;$scope.view_is_backtotable=true;$scope.freload();}
+$scope.freload=function(){$scope.timetable.time_table_date_my=angular.copy($scope.timetable.time_table_date_org);for(i=0;i<$scope.timetable.time_table_date_my.length;i++){if(!$scope.timetable.time_table_date_my[i].is_add)
+delete $scope.timetable.time_table_date_my[i];}
+$scope.timetable.time_table_date_my=$scope.reindex_array_keys($scope.timetable.time_table_date_my);if($scope.timetable.time_table_date_my<=0){$scope.view_is_backtotable=true;}
+if($scope.my_scheme!=""&&$scope.view_is_backtotable){$scope.timetable.time_table_date=angular.copy($scope.timetable.time_table_date_org);$scope.timetable.time_table_date=$filter('filter')($scope.timetable.time_table_date,{'scheme':$scope.my_scheme});$scope.timetable.time_table_date=$filter('filter')($scope.timetable.time_table_date,{'sem':$scope.my_sem});}else{if($scope.view_is_backtotable)
+$scope.timetable.time_table_date=angular.copy($scope.timetable.time_table_date_org);else
+$scope.timetable.time_table_date=angular.copy($scope.timetable.time_table_date_my);}
+if($scope.view_is_backtotable)
+$scope.timetable.time_table_date=$filter('ugroupBy')($scope.timetable.time_table_date,'scheme');else
+$scope.timetable.time_table_date=$filter('ugroupBy')($scope.timetable.time_table_date_my,'scheme');}
+$scope.schemef=function(data,key){$scope.my_scheme_key=key;$scope.my_scheme=data;$scope.my_sem="";$scope.freload();}
+$scope.schemefsem=function(data){$scope.my_sem=data;$scope.freload();}
+$scope.fetchTimetable=function(){$scope.timetable="";$scope.loading=true;$http.get($location.path()+'/get').then(function(response){if(response.data.mismatch=='1')
+$window.location.reload();$scope.timetable_pre=response.data;$scope.timetable_pre.time_table_date=$filter('orderBy')($scope.timetable_pre.time_table_date,'scheme');$scope.timetable_pre.time_table_date_org=angular.copy($scope.timetable_pre.time_table_date);$scope.timetable_pre.time_table_date=$filter('ugroupBy')($scope.timetable_pre.time_table_date,'scheme');$scope.timetable_dup=angular.copy($scope.timetable_pre);$scope.timetable=$scope.timetable_pre;$scope.updatecart();$scope.loading=false;},function(error){$scope.ajError=true;$scope.loading=false;});}
+$scope.fetchTimetable();})
+app.controller('usnCtrl',function($scope,$location,$http,$cookieStore,$window,$anchorScroll){$scope.ajError=false;$scope.usninvalid=false;$scope.notification="";$scope.changesyle=function(a){$scope.issyla=a;$cookieStore.put('sylabus',$scope.issyla);}
+$scope.sdadv=function(){$scope.adv=($scope.adv==1)?0:1;$cookieStore.put('adv',$scope.adv);b=0;if($scope.adv==0){$scope.usnformyear=b.toString();$cookieStore.put('usnformyear',$scope.usnformyear);$scope.usnformyearcb=b.toString();$cookieStore.put('usnformyearcb',$scope.usnformyearcb);$scope.usnformyearcbm=b.toString();$cookieStore.put('usnformyearcbm',$scope.usnformyearcbm);}}
+$scope.changesylendyear=function(a,b,c){if(a==1&&c==0){$scope.issyla=1;}else if(a==2){$scope.issyla=2;}else if(a==1&&c!=0){$scope.issyla=3;}
+$cookieStore.put('sylabus',$scope.issyla);$anchorScroll.yOffset=0;jQuery("#usn").focus();$anchorScroll();}
+if($scope.getcbcspage!=undefined)
+$scope.changesyle($scope.getcbcspage);$scope.issyla=$cookieStore.get('sylabus')!=undefined?$cookieStore.get('sylabus'):'1';$scope.usnformyear='0';$scope.csemester='1';$scope.usnformyearcb='0';$scope.usnformyearcbm='0';$scope.adv=0;$scope.loading=true;$scope.save=function(){if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{2}\d{3}$/.test($scope.usnstud)||/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{3}\d{2}$/.test($scope.usnstud)){if($scope.usnformyearcbm=='0'&&$scope.issyla==3){$location.path('/results/'+$scope.usnstud).search({cbse:'1'});}
+else if($scope.usnformyear=='0'&&$scope.issyla==1){$location.path('/results/'+$scope.usnstud);}else if($scope.usnformyearcb=='0'&&$scope.issyla==2){$location.path('/resultscbse/'+$scope.usnstud);}else if($scope.issyla==1){$location.path('/results-by-year/'+$scope.usnstud+'/'+$scope.usnformyear);}else if($scope.issyla==2){$location.path('/resultcbse/'+$scope.usnstud+'/'+$scope.usnformyearcb);}else if($scope.issyla==3){$location.path('/results-by-year/'+$scope.usnstud+'/'+$scope.usnformyearcbm).search({cbse:'1'});}}else{$scope.usninvalid=true;document.getElementById("usn").focus();}}
+$scope.fetchNotification=function(){$scope.notification="";$scope.updateloading=true;$scope.loading=true;$scope.posts=null;$http.get('notification/get').then(function(response){if(response.data.mismatch=='1')
+$window.location.reload();$scope.notification=response.data;$scope.loading=false;},function(error){$scope.ajError=true;$scope.loading=false;});}
+$scope.fetchNotification();$scope.changeScheme=function(){$cookieStore.put('sylabus',$scope.issyla);}
+$scope.changeusnformyear=function(a){if(a==undefined){$cookieStore.put('usnformyear',$scope.usnformyear);}else{$scope.usnformyear=a.toString();$cookieStore.put('usnformyear',$scope.usnformyear);}}
+$scope.changecsemester=function(){$cookieStore.put('csemester',$scope.csemester);}
+$scope.changeusnformyearcb=function(a){if(a==undefined){$cookieStore.put('usnformyearcb',$scope.usnformyearcb);}else{$scope.usnformyearcb=a.toString();$cookieStore.put('usnformyearcb',$scope.usnformyearcb);}}
+$scope.changeusnformyearcbm=function(a){if(a==undefined){$cookieStore.put('usnformyearcbm',$scope.usnformyearcbm);}else{$scope.usnformyearcbm=a.toString();$cookieStore.put('usnformyearcbm',$scope.usnformyearcbm);}}}).controller('resultYearCtrl',function($scope,$location,$http,$rootScope,$routeParams,$window,$q){$scope.loading=true;$scope.ajError=false;$scope.umaxAjax=3;$scope.userverbusy=false;$scope.updating_result=false;$scope.uinvaliderror=false;$scope.maxAjax=3;$scope.serverbusy=false;$scope.checking_result=false;$scope.invaliderror=false;$scope.classmarks="";$scope.getcbse=$location.search().cbse==undefined?0:$location.search().cbse;csurl=$location.path().split('/');$scope.usn=csurl[csurl.length-2];$scope.year=csurl[csurl.length-1];$scope.cancel=$q.defer();$rootScope.srequest=$scope.request={method:'get',url:$location.path()+'/get',timeout:$scope.cancel.promise,cancel:$scope.cancel};$http($scope.request).then(function(response){if(response.data.mismatch=='1')
+$window.location.reload();if(response.data.error!==undefined&&response.data.error!=""){alert(response.data.error);$location.path('/');return false;}
+$scope.classmarks=response.data.class_marks;$scope.marks=response.data.marks;$scope.loading=false;$scope.fetchable=response.data.fetchable;if(response.data.fetchable!=""){}else if(response.data.updateable>0){$scope.newUpdateResult();$scope.updating_result=true;}},function(error){if(!$rootScope.usercancel){$scope.ajError=true;$scope.loading=false;}else{$scope.loading=true;}});$scope.reloadChild=function(){$scope.maxAjax=3;$scope.checking_result=true;$scope.serverbusy=false;$scope.invaliderror=false;$scope.newfetchResult();}
+$scope.nextusn=function(){if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{2}\d{3}$/.test($scope.usn)){var cusn=$scope.usn.substr(-3);cusn=parseInt(cusn)+1;cusn=("000"+cusn).slice(-3);cusn=$scope.usn.substring(0,$scope.usn.length-3)+cusn;}else if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{3}\d{2}$/.test($scope.usn)){var cusn=$scope.usn.substr(-2);if(parseInt(cusn)<100)
+cusn=parseInt(cusn)+1;cusn=("00"+cusn).slice(-2);cusn=$scope.usn.substring(0,$scope.usn.length-2)+cusn;}
+$scope.npredirect(cusn);}
+$scope.prevusn=function(){if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{2}\d{3}$/.test($scope.usn)){var cusn=$scope.usn.substr(-3);if(parseInt(cusn)>0)
+cusn=parseInt(cusn)-1;cusn=("000"+cusn).slice(-3);cusn=$scope.usn.substring(0,$scope.usn.length-3)+cusn;}else if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{3}\d{2}$/.test($scope.usn)){var cusn=$scope.usn.substr(-2);if(parseInt(cusn)>0)
+cusn=parseInt(cusn)-1;cusn=("00"+cusn).slice(-2);cusn=$scope.usn.substring(0,$scope.usn.length-2)+cusn;}
+$scope.npredirect(cusn);}
+$scope.cur_usntype="";$scope.getusntype=function(){if($scope.usn==undefined)
+return null;if($scope.cur_usntype)
+return $scope.cur_usntype;if(/^\d[a-zA-Z]{2}\d{2}at\d{3}$/.test($scope.usn)){$scope.cur_usntype=2;}else if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{2}\d{3}$/.test($scope.usn)){$scope.cur_usntype=1;}else if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{3}\d{2}$/.test($scope.usn)){$scope.cur_usntype=3;}}
+$scope.getusntype();$scope.npredirect=function(cusn){if($scope.usn!=cusn){if($scope.request.cancel){$scope.request.cancel.resolve();}
+$location.path($location.path().replace($scope.usn,cusn));}}
+$scope.reloadUpdate=function(){$scope.umaxAjax=3;$scope.updating_result=true;$scope.userverbusy=false;$scope.uinvaliderror=false;$scope.newUpdateResult();}
+$scope.newUpdateResult=function(){$scope.updating_result=true;$scope.userverbusy=false;$rootScope.srequest=$scope.request={method:'post',url:'/resultsUpdateryear/'+$scope.usn+'/'+$scope.year,data:{'is_cbse':$scope.getcbse},timeout:$scope.cancel.promise,cancel:$scope.cancel};$http($scope.request).then(function(response){if(response.data.mismatch=='1')
+$window.location.reload();$scope.umaxAjax--;if(response.data.updated>0){angular.extend($scope.classmarks,response.data.class_marks);$scope.marks=response.data.marks;}
+if($scope.classmarks)
+$scope.updating_result=false;$scope.userverbusy=response.data.serverbusy;$scope.ucheckinvalid=(response.data.invalid==response.data.fetchable)&&(response.data.invalid!=0&&response.data.fetchable!="");if($scope.userverbusy==0)
+$scope.userverbusy=false;if(response.data.serverbusy&&$scope.umaxAjax!=0){$scope.newUpdateResult();return false;}
+if((response.data.fetchable!=""&&!$scope.ucheckinvalid&&!response.data.serverbusy)&&$scope.umaxAjax!=0){$scope.newUpdateResult();return false;}else{$scope.updating_result=false;}
+if(response.data.fetchable!=""&&!response.data.serverbusy){$scope.userverbusy=false;$scope.updating_result=false;}
+else if($scope.umaxAjax==0&&!$scope.ucheckinvalid){$scope.updating_result=false;}
+if($scope.ucheckinvalid&&$scope.classmarks==""){$scope.uinvaliderror=true;}},function(error){if(!$rootScope.usercancel){$scope.ajError=true;$scope.loading=false;}else{$scope.loading=true;}
+$scope.updating_result=false;});}
+$scope.newfetchResult=function(){$scope.checking_result=true;$scope.serverbusy=false;$rootScope.srequest=$scope.request={method:'post',url:'/resultsFetcheryear/'+$scope.usn+'/'+$scope.year,data:{'is_cbse':$scope.getcbse},timeout:$scope.cancel.promise,cancel:$scope.cancel};$http($scope.request).then(function(response){if(response.data.mismatch=='1')
+$window.location.reload();$scope.maxAjax--;angular.extend($scope.classmarks,response.data.class_marks);$scope.marks=response.data.marks;if($scope.classmarks)
+$scope.checking_result=false;$scope.fetchable=response.data.fetchable;$scope.serverbusy=response.data.serverbusy;$scope.loading=false;$scope.checkinvalid=(response.data.invalid==response.data.fetchable)&&(response.data.invalid!=0&&response.data.fetchable!="");if($scope.serverbusy==0)
+$scope.serverbusy=false;if(response.data.serverbusy&&$scope.maxAjax!=0){$scope.newfetchResult();return false;}
+if((response.data.fetchable!=""&&!$scope.checkinvalid&&!response.data.serverbusy)&&$scope.maxAjax!=0){$scope.newfetchResult();return false;}else{$scope.checking_result=false;}
+if(response.data.fetchable==""&&!response.data.serverbusy){$scope.serverbusy=false;$scope.checking_result=false;}
+else if($scope.maxAjax==0&&!$scope.checkinvalid){$scope.checking_result=false;}
+if($scope.checkinvalid&&$scope.classmarks==""){$scope.invaliderror=true;}},function(error){if(!$rootScope.usercancel){$scope.ajError=true;$scope.loading=false;}else{$scope.loading=true;}
+$scope.checking_result=false;});}}).controller('rightModuleCtrl',function($scope,$location,$http){}).controller('resultsCtrl',function($scope,$location,$http,$rootScope,$window,$q,$filter,$stateParams){$scope.loading=true;$scope.umaxAjax=3;$scope.ajError=false;$scope.userverbusy=false;$scope.updating_result=false;$scope.uinvaliderror=false;$scope.uhasinvalid=false;$scope.maxAjax=3;$scope.serverbusy=false;$scope.checking_result=false;$scope.invaliderror=false;$scope.hasinvalid=false;$scope.classmarks="";$scope.cancel=$q.defer();$scope.getcbse=$location.search().cbse==undefined?0:$location.search().cbse;$rootScope.srequest=$scope.request={method:'get',url:$location.path()+'/get?is_cbse='+$scope.getcbse,timeout:$scope.cancel.promise,cancel:$scope.cancel};$scope.usn=$location.path().substr($location.path().lastIndexOf('/')+1);$scope.cur_usntype="";$scope.getusntype=function(){if($scope.usn==undefined)
+return null;if($scope.cur_usntype)
+return $scope.cur_usntype;if(/^\d[a-zA-Z]{2}\d{2}at\d{3}$/.test($scope.usn)){$scope.cur_usntype=2;}else if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{2}\d{3}$/.test($scope.usn)){$scope.cur_usntype=1;}else if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{3}\d{2}$/.test($scope.usn)){$scope.cur_usntype=3;}}
+$scope.getusntype();$http($scope.request).then(function(response){if(response.data.mismatch=='1')
+$window.location.reload();$scope.classmarks=response.data.class_marks;$scope.loading=false;$scope.fetchable=response.data.fetchable;if(response.data.error!==undefined&&response.data.error!=""){alert(response.data.error);$location.path('/');return false;}
+if(response.data.fetchable!=""){}else if(response.data.updateable>0){$scope.newUpdateResult();$scope.updating_result=true;}
+$scope.classmarks=$filter('orderBy')($scope.classmarks,'-result_year');},function(error){if(!$rootScope.usercancel){$scope.ajError=true;$scope.loading=false;}else{$scope.loading=true;}});$scope.reloadChild=function(){$scope.maxAjax=3;$scope.checking_result=true;$scope.serverbusy=false;$scope.invaliderror=false;$scope.newfetchResult();$scope.hasinvalid=false;}
+$scope.nextusn=function(){if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{2}\d{3}$/.test($scope.usn)){var cusn=$scope.usn.substr(-3);cusn=parseInt(cusn)+1;cusn=("000"+cusn).slice(-3);cusn=$scope.usn.substring(0,$scope.usn.length-3)+cusn;}else if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{3}\d{2}$/.test($scope.usn)){var cusn=$scope.usn.substr(-2);if(parseInt(cusn)<100)
+cusn=parseInt(cusn)+1;cusn=("00"+cusn).slice(-2);cusn=$scope.usn.substring(0,$scope.usn.length-2)+cusn;}
+$scope.npredirect(cusn);}
+$scope.prevusn=function(){if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{2}\d{3}$/.test($scope.usn)){var cusn=$scope.usn.substr(-3);if(parseInt(cusn)>0)
+cusn=parseInt(cusn)-1;cusn=("000"+cusn).slice(-3);cusn=$scope.usn.substring(0,$scope.usn.length-3)+cusn;}else if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{3}\d{2}$/.test($scope.usn)){var cusn=$scope.usn.substr(-2);if(parseInt(cusn)>0)
+cusn=parseInt(cusn)-1;cusn=("00"+cusn).slice(-2);cusn=$scope.usn.substring(0,$scope.usn.length-2)+cusn;}
+$scope.npredirect(cusn);}
+$scope.npredirect=function(cusn){if($scope.usn!=cusn){if($scope.request.cancel){$scope.request.cancel.resolve();}
+$location.path($location.path().replace($scope.usn,cusn));}}
+$scope.reloadUpdate=function(){$scope.umaxAjax=3;$scope.uhasinvalid=false;$scope.updating_result=true;$scope.userverbusy=false;$scope.uinvaliderror=false;$scope.newUpdateResult();}
+$scope.newUpdateResult=function(){$scope.updating_result=true;$scope.userverbusy=false;$rootScope.srequest=$scope.request={method:'post',url:'/resultsUpdateryear/'+$scope.usn+'/',data:{'is_cbse':$scope.getcbse},timeout:$scope.cancel.promise,cancel:$scope.cancel};$http($scope.request).then(function(response){if(response.data.mismatch=='1')
+$window.location.reload();if(response.data.error!==undefined&&response.data.error!=""){alert(response.data.error);$location.path('/');return false;}
+$scope.umaxAjax--;if(response.data.updated>0){$scope.classmarks=response.data.class_marks;$scope.classmarks=$filter('orderBy')($scope.classmarks,'-result_year');$scope.marks=response.data.marks;}
+if($scope.classmarks)
+$scope.updating_result=false;$scope.userverbusy=response.data.serverbusy;$scope.ucheckinvalid=(response.data.invalid==response.data.fetchable)&&(response.data.invalid!=0&&response.data.fetchable!="");$scope.uhasinvalid=(response.data.invalid<response.data.fetchable)&&response.data.invalid!=0;if($scope.userverbusy==0)
+$scope.userverbusy=false;if(response.data.serverbusy&&$scope.umaxAjax!=0){$scope.newUpdateResult();return false;}else{$scope.updating_result=false;}
+if(!response.data.serverbusy){$scope.userverbusy=false;$scope.updating_result=false;}
+else if($scope.umaxAjax==0&&!$scope.ucheckinvalid){$scope.updating_result=false;}
+if($scope.ucheckinvalid&&$scope.classmarks==""){$scope.uinvaliderror=true;}},function(error){if(!$rootScope.usercancel){$scope.ajError=true;$scope.loading=false;}else{$scope.loading=true;}
+$scope.updating_result=false;});}
+$scope.newfetchResult=function(){$scope.checking_result=true;$scope.serverbusy=false;$rootScope.srequest=$scope.request={method:'post',url:'/resultsFetcher/'+$scope.usn,data:{'is_cbse':$scope.getcbse},timeout:$scope.cancel.promise,cancel:$scope.cancel};$http($scope.request).then(function(response){if(response.data.mismatch=='1')
+$window.location.reload();$scope.maxAjax--;for(i=0;i<response.data.class_marks.length;i++)
+$scope.classmarks.push(response.data.class_marks[i]);if($scope.classmarks.length<=0)
+$scope.classmarks="";else{$scope.classmarks=$filter('orderBy')($scope.classmarks,'-result_year');}
+if(response.data.error!==undefined&&response.data.error!=""){alert(response.data.error);$location.path('/');return false;}
+$scope.fetchable=response.data.fetchable;$scope.marks=response.data.marks;$scope.serverbusy=response.data.serverbusy;$scope.checkinvalid=(response.data.invalid==response.data.fetchable)&&(response.data.invalid!=0&&response.data.fetchable!="");$scope.hasinvalid=(response.data.invalid<response.data.fetchable)&&response.data.invalid!=0;if(response.data.serverbusy&&$scope.maxAjax!=0){$scope.newfetchResult();return false;}
+if(((response.data.fetchable!=""||$scope.hasinvalid)&&!$scope.checkinvalid&&!response.data.serverbusy)&&$scope.maxAjax!=0){$scope.newfetchResult();return false;}else{$scope.checking_result=false;}
+if(response.data.fetchable==""&&!response.data.serverbusy){$scope.serverbusy=false;$scope.checking_result=false;}
+else if($scope.maxAjax==0&&!$scope.checkinvalid){$scope.checking_result=false;}
+if($scope.checkinvalid&&$scope.classmarks==""){$scope.invaliderror=true;}
+if(!$scope.checking_result&&!response.data.serverbusy&&$scope.classmarks!=""){$scope.reloadUpdate();}},function(error){if(!$rootScope.usercancel){$scope.ajError=true;$scope.loading=false;}else{$scope.loading=true;}
+$scope.checking_result=false;});}}).controller('resultsCbseCtrl',function($scope,$location,$http,$rootScope,$window,$q,$filter,$stateParams){$scope.loading=true;$scope.umaxAjax=3;$scope.ajError=false;$scope.userverbusy=false;$scope.updating_result=false;$scope.uinvaliderror=false;$scope.uhasinvalid=false;$scope.maxAjax=3;$scope.serverbusy=false;$scope.checking_result=false;$scope.invaliderror=false;$scope.hasinvalid=false;$scope.classmarks="";$scope.cancel=$q.defer();$rootScope.srequest=$scope.request={method:'get',url:$location.path()+'/get',timeout:$scope.cancel.promise,cancel:$scope.cancel};$scope.usn=$location.path().substr($location.path().lastIndexOf('/')+1);$http($scope.request).then(function(response){if(response.data.mismatch=='1')
+$window.location.reload();$scope.classmarks=response.data.class_marks;$scope.loading=false;$scope.fetchable=response.data.fetchable;if(response.data.error!==undefined&&response.data.error!=""){alert(response.data.error);$location.path('/');return false;}
+if(response.data.fetchable!=""){$scope.checking_result=true;$scope.newfetchResult();}else if(response.data.updateable>0){$scope.newUpdateResult();$scope.updating_result=true;}
+$scope.classmarks=$filter('orderBy')($scope.classmarks,'-result_year');},function(error){if(!$rootScope.usercancel){$scope.ajError=true;$scope.loading=false;}else{$scope.loading=true;}});$scope.reloadChild=function(){$scope.maxAjax=3;$scope.checking_result=true;$scope.serverbusy=false;$scope.invaliderror=false;$scope.newfetchResult();$scope.hasinvalid=false;}
+$scope.nextusn=function(){if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{2}\d{3}$/.test($scope.usn)){var cusn=$scope.usn.substr(-3);cusn=parseInt(cusn)+1;cusn=("000"+cusn).slice(-3);cusn=$scope.usn.substring(0,$scope.usn.length-3)+cusn;}else if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{3}\d{2}$/.test($scope.usn)){var cusn=$scope.usn.substr(-2);if(parseInt(cusn)<100)
+cusn=parseInt(cusn)+1;cusn=("00"+cusn).slice(-2);cusn=$scope.usn.substring(0,$scope.usn.length-2)+cusn;}
+$scope.npredirect(cusn);}
+$scope.prevusn=function(){if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{2}\d{3}$/.test($scope.usn)){var cusn=$scope.usn.substr(-3);if(parseInt(cusn)>0)
+cusn=parseInt(cusn)-1;cusn=("000"+cusn).slice(-3);cusn=$scope.usn.substring(0,$scope.usn.length-3)+cusn;}else if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{3}\d{2}$/.test($scope.usn)){var cusn=$scope.usn.substr(-2);if(parseInt(cusn)>0)
+cusn=parseInt(cusn)-1;cusn=("00"+cusn).slice(-2);cusn=$scope.usn.substring(0,$scope.usn.length-2)+cusn;}
+$scope.npredirect(cusn);}
+$scope.npredirect=function(cusn){if($scope.usn!=cusn){if($scope.request.cancel){$scope.request.cancel.resolve();}
+$location.path($location.path().replace($scope.usn,cusn));}}
+$scope.newfetchResult=function(){$scope.checking_result=true;$scope.serverbusy=false;$rootScope.srequest=$scope.request={method:'post',url:'/resultscbseFetcher/'+$scope.usn,timeout:$scope.cancel.promise,cancel:$scope.cancel};$http($scope.request).then(function(response){if(response.data.mismatch=='1')
+$window.location.reload();$scope.maxAjax--;for(i=0;i<response.data.class_marks.length;i++)
+$scope.classmarks.push(response.data.class_marks[i]);if($scope.classmarks.length<=0)
+$scope.classmarks="";else{$scope.classmarks=$filter('orderBy')($scope.classmarks,'-result_year');}
+$scope.fetchable=response.data.fetchable;$scope.marks=response.data.marks;$scope.serverbusy=response.data.serverbusy;$scope.checkinvalid=(response.data.invalid==response.data.fetchable)&&(response.data.invalid!=0&&response.data.fetchable!="");$scope.hasinvalid=(response.data.invalid<response.data.fetchable)&&response.data.invalid!=0;if(response.data.serverbusy&&$scope.maxAjax!=0){$scope.newfetchResult();return false;}
+if(((response.data.fetchable!=""||$scope.hasinvalid)&&!$scope.checkinvalid&&!response.data.serverbusy)&&$scope.maxAjax!=0){$scope.newfetchResult();return false;}else{$scope.checking_result=false;}
+if(response.data.fetchable==""&&!response.data.serverbusy){$scope.serverbusy=false;$scope.checking_result=false;}
+else if($scope.maxAjax==0&&!$scope.checkinvalid){$scope.checking_result=false;}
+if($scope.checkinvalid&&$scope.classmarks==""){$scope.invaliderror=true;}
+if(!$scope.checking_result&&!response.data.serverbusy&&$scope.classmarks!=""){}},function(error){if(!$rootScope.usercancel){$scope.ajError=true;$scope.loading=false;}else{$scope.loading=true;}
+$scope.checking_result=false;});}}).controller('resultCbseCtrl',function($scope,$location,$http,$rootScope,$window,$q){$scope.loading=true;$scope.maxAjax=3;$scope.serverbusy=false;$scope.checking_result=false;$scope.invaliderror=false;$scope.hasinvalid=false;$scope.classmarks="";$scope.ajError=false;csurl=$location.path().split('/');$scope.usn=csurl[csurl.length-2];$scope.year=csurl[csurl.length-1];$scope.cancel=$q.defer();$rootScope.srequest=$scope.request={method:'get',url:$location.path()+'/get',timeout:$scope.cancel.promise,cancel:$scope.cancel};$http($scope.request).then(function(response){if(response.data.mismatch=='1')
+$window.location.reload();if(response.data.error!==undefined&&response.data.error!=""){alert(response.data.error);$location.path('/');return false;}
+$scope.classmarks=response.data.class_marks;$scope.marks=response.data.marks;$scope.loading=false;$scope.fetchable=response.data.fetchable;if(response.data.fetchable!=""){$scope.newfetchResult();$scope.checking_result=true;}},function(error){$scope.ajError=true;$scope.loading=false;});$scope.nextusn=function(){if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{2}\d{3}$/.test($scope.usn)){var cusn=$scope.usn.substr(-3);cusn=parseInt(cusn)+1;cusn=("000"+cusn).slice(-3);cusn=$scope.usn.substring(0,$scope.usn.length-3)+cusn;}else if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{3}\d{2}$/.test($scope.usn)){var cusn=$scope.usn.substr(-2);if(parseInt(cusn)<100)
+cusn=parseInt(cusn)+1;cusn=("00"+cusn).slice(-2);cusn=$scope.usn.substring(0,$scope.usn.length-2)+cusn;}
+$scope.npredirect(cusn);}
+$scope.prevusn=function(){if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{2}\d{3}$/.test($scope.usn)){var cusn=$scope.usn.substr(-3);if(parseInt(cusn)>0)
+cusn=parseInt(cusn)-1;cusn=("000"+cusn).slice(-3);cusn=$scope.usn.substring(0,$scope.usn.length-3)+cusn;}else if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{3}\d{2}$/.test($scope.usn)){var cusn=$scope.usn.substr(-2);if(parseInt(cusn)>0)
+cusn=parseInt(cusn)-1;cusn=("00"+cusn).slice(-2);cusn=$scope.usn.substring(0,$scope.usn.length-2)+cusn;}
+$scope.npredirect(cusn);}
+$scope.npredirect=function(cusn){if($scope.usn!=cusn){if($scope.request.cancel){$scope.request.cancel.resolve();}
+$location.path($location.path().replace($scope.usn,cusn));}}
+$scope.reloadChild=function(){$scope.maxAjax=3;$scope.checking_result=true;$scope.serverbusy=false;$scope.invaliderror=false;$scope.newfetchResult();$scope.hasinvalid=false;}
+$scope.newfetchResult=function(){$scope.serverbusy=false;$scope.checking_result=true;$rootScope.srequest=$scope.request={method:'get',url:'/resultFetchercbse/'+$scope.usn+'/'+$scope.year+'/get',timeout:$scope.cancel.promise,cancel:$scope.cancel};$http($scope.request).then(function(response){$scope.maxAjax--;if(response.data.mismatch=='1')
+$window.location.reload();angular.extend($scope.classmarks,response.data.class_marks);if($scope.classmarks.length<=0)
+$scope.classmarks="";$scope.fetchable=response.data.fetchable;$scope.marks=response.data.marks;$scope.serverbusy=response.data.serverbusy;$scope.checkinvalid=(response.data.invalid==response.data.fetchable)&&(response.data.invalid!=0&&response.data.fetchable!="");if(response.data.serverbusy&&$scope.maxAjax!=0){$scope.newfetchResult();return false;}
+if(((response.data.fetchable!=""||$scope.hasinvalid)&&!$scope.checkinvalid&&!response.data.serverbusy)&&$scope.maxAjax!=0){$scope.newfetchResult();return false;}else{$scope.checking_result=false;}
+if(response.data.fetchable==""&&!response.data.serverbusy){$scope.serverbusy=false;$scope.checking_result=false;}
+else if($scope.maxAjax==0&&!$scope.checkinvalid){$scope.checking_result=false;}
+if($scope.checkinvalid&&$scope.classmarks==""){$scope.invaliderror=true;}},function(error){if(!$rootScope.usercancel){$scope.ajError=true;$scope.loading=false;}else{$scope.loading=true;}
+$scope.checking_result=false;});}}).controller('resultcbseBysemCtrl',function($scope,$location,$http,$rootScope,$routeParams,$window,$q){$scope.loading=true;$scope.classmarks="";$scope.marks="";$scope.getcbse=$location.search().cbse==undefined?0:$location.search().cbse;$scope.ajError=false;csurl=$location.path().split('/');$scope.usn=csurl[csurl.length-2];$scope.cancel=$q.defer();$rootScope.srequest=$scope.request={method:'get',url:$location.path()+'/get',timeout:$scope.cancel.promise,cancel:$scope.cancel};$http($scope.request).then(function(response){if(response.data.mismatch=='1')
+$window.location.reload();if(response.data.error!==undefined&&response.data.error!=""){alert(response.data.error);$location.path('/');return false;}
+$scope.classmarks=response.data.class_marks;$scope.marks=response.data.marks;$scope.loading=false;},function(error){$scope.ajError=true;$scope.loading=false;});$scope.nextusn=function(){if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{2}\d{3}$/.test($scope.usn)){var cusn=$scope.usn.substr(-3);cusn=parseInt(cusn)+1;cusn=("000"+cusn).slice(-3);cusn=$scope.usn.substring(0,$scope.usn.length-3)+cusn;}else if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{3}\d{2}$/.test($scope.usn)){var cusn=$scope.usn.substr(-2);if(parseInt(cusn)<100)
+cusn=parseInt(cusn)+1;cusn=("00"+cusn).slice(-2);cusn=$scope.usn.substring(0,$scope.usn.length-2)+cusn;}
+$scope.npredirect(cusn);}
+$scope.prevusn=function(){if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{2}\d{3}$/.test($scope.usn)){var cusn=$scope.usn.substr(-3);if(parseInt(cusn)>0)
+cusn=parseInt(cusn)-1;cusn=("000"+cusn).slice(-3);cusn=$scope.usn.substring(0,$scope.usn.length-3)+cusn;}else if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{3}\d{2}$/.test($scope.usn)){var cusn=$scope.usn.substr(-2);if(parseInt(cusn)>0)
+cusn=parseInt(cusn)-1;cusn=("00"+cusn).slice(-2);cusn=$scope.usn.substring(0,$scope.usn.length-2)+cusn;}
+$scope.npredirect(cusn);}
+$scope.npredirect=function(cusn){if($scope.usn!=cusn){if($scope.request.cancel){$scope.request.cancel.resolve();}
+$location.path($location.path().replace($scope.usn,cusn));}}}).controller('resultSemCtrl',function($scope,$location,$http,$rootScope,$routeParams,$window,$q){$scope.loading=true;$scope.classmarks="";$scope.marks="";$scope.getcbse=$location.search().cbse==undefined?0:$location.search().cbse;$scope.ajError=false;csurl=$location.path().split('/');$scope.usn=csurl[csurl.length-3];$scope.cur_usntype="";$scope.getusntype=function(){if($scope.usn==undefined)
+return null;if($scope.cur_usntype)
+return $scope.cur_usntype;if(/^\d[a-zA-Z]{2}\d{2}at\d{3}$/.test($scope.usn)){$scope.cur_usntype=2;}else if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{2}\d{3}$/.test($scope.usn)){$scope.cur_usntype=1;}else if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{3}\d{2}$/.test($scope.usn)){$scope.cur_usntype=3;}}
+$scope.getusntype();$scope.cancel=$q.defer();$rootScope.srequest=$scope.request={method:'get',url:$location.path()+'/get',timeout:$scope.cancel.promise,cancel:$scope.cancel};$http($scope.request).then(function(response){if(response.data.mismatch=='1')
+$window.location.reload();if(response.data.error!==undefined&&response.data.error!=""){alert(response.data.error);$location.path('/');return false;}
+$scope.classmarks=response.data.class_marks;$scope.marks=response.data.marks;$scope.loading=false;},function(error){$scope.ajError=true;$scope.loading=false;});$scope.nextusn=function(){if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{2}\d{3}$/.test($scope.usn)){var cusn=$scope.usn.substr(-3);cusn=parseInt(cusn)+1;cusn=("000"+cusn).slice(-3);cusn=$scope.usn.substring(0,$scope.usn.length-3)+cusn;}else if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{3}\d{2}$/.test($scope.usn)){var cusn=$scope.usn.substr(-2);if(parseInt(cusn)<100)
+cusn=parseInt(cusn)+1;cusn=("00"+cusn).slice(-2);cusn=$scope.usn.substring(0,$scope.usn.length-2)+cusn;}
+$scope.npredirect(cusn);}
+$scope.prevusn=function(){if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{2}\d{3}$/.test($scope.usn)){var cusn=$scope.usn.substr(-3);if(parseInt(cusn)>0)
+cusn=parseInt(cusn)-1;cusn=("000"+cusn).slice(-3);cusn=$scope.usn.substring(0,$scope.usn.length-3)+cusn;}else if(/^\d[a-zA-Z]{2}\d{2}[a-zA-Z]{3}\d{2}$/.test($scope.usn)){var cusn=$scope.usn.substr(-2);if(parseInt(cusn)>0)
+cusn=parseInt(cusn)-1;cusn=("00"+cusn).slice(-2);cusn=$scope.usn.substring(0,$scope.usn.length-2)+cusn;}
+$scope.npredirect(cusn);}
+$scope.npredirect=function(cusn){if($scope.usn!=cusn){if($scope.request.cancel){$scope.request.cancel.resolve();}
+$location.path($location.path().replace($scope.usn,cusn));}}}).controller('ClassresultCtrl',function($scope,$location,$http,$rootScope,$routeParams,$window,NgTableParams){$scope.loading=true;$scope.ajError=false;$scope.classmarks="";$scope.marks="";$scope.getcbse=$location.search().cbse==undefined?0:$location.search().cbse;$http.get($location.path()+'/get',{params:{"cbse":$scope.getcbse}}).then(function(response){if(response.data.mismatch=='1')
+$window.location.reload();if(response.data.error!==undefined&&response.data.error!=""){alert(response.data.error);$location.path('/');return false;}
+$scope.classmarks=response.data.class_marks;$scope.classmarksTable=new NgTableParams({count:$scope.classmarks.length},{counts:[],total:$scope.classmarks.length,dataset:$scope.classmarks});$scope.loading=false;},function(error){$scope.ajError=true;$scope.loading=false;});}).controller('resultCbseClsCtrl',function($scope,$location,$http,$rootScope,$window,NgTableParams){$scope.loading=true;$scope.classmarks="";$scope.marks="";$http.get($location.path()+'/get').then(function(response){if(response.data.mismatch=='1')
+$window.location.reload();if(response.data.error!==undefined&&response.data.error!=""){alert(response.data.error);$location.path('/');return false;}
+$scope.classmarks=response.data.class_marks;$scope.classmarksTable=new NgTableParams({page:1,count:50},{total:$scope.classmarks.length,dataset:$scope.classmarks});$scope.loading=false;},function(error){$scope.ajError=true;$scope.loading=false;});}).controller('CollegeCtrl',function($scope,$location,$http){$scope.loading=true;$scope.ajError=false;$http.get('templates/college.html').then(function(response){$scope.colleges=response.data.colleges;$scope.regions=response.data.regions;$scope.loading=false;},function(error){$scope.ajError=true;$scope.loading=false;});}).controller('CoursesCtrl',function($scope,$location,$http){$scope.loading=true;$scope.ajError=false;$scope.courses="";$http.get('templates/course.html').then(function(response){$scope.courses=response.data;$scope.loading=false;},function(error){$scope.ajError=true;$scope.loading=false;});}).controller('ContactCtrl',function($scope,$location,$http,$window,CSRF_TOKEN){$scope.ajError=false;$scope.contactsubmit=function(){$http.post('/contact/submitform',{'name':$scope.fname,'email':$scope.email,'subject':$scope.subject,'message':$scope.message,'url':$scope.reporturl,'g-recaptcha-response':$scope.cotrecaptcha,'_token':CSRF_TOKEN}).then(function(response){if(response.data.mismatch=='1')
+$window.location.reload();$scope.data=response.data;},function(error){$scope.ajError=true;$scope.loading=false;})}
+$scope.reCaptchaResponse="";$scope.setResponse=function(response){$scope.reCaptchaResponse=response;};}).controller('NavigationCtrl',['$scope','$location',function($scope,$location){$scope.ajError=false;$scope.isCurrentPath=function(path){return $location.path()==path;};}]);app.filter('range',function(){return function(input,total){total=parseInt(total);for(var i=1;i<=total;i++){input.push(i);}
+return input;};});app.filter('ugroupBy',function(){var results={};return function(data,key){if(!(data&&key))return;var result;if(!this.$id){result={};}else{var scopeId=this.$id;if(!results[scopeId]){results[scopeId]={};this.$on("$destroy",function(){delete results[scopeId];});}
+result=results[scopeId];}
+for(var groupKey in result)
+result[groupKey].splice(0,result[groupKey].length);for(var i=0;i<data.length;i++){if(!result[data[i][key]])
+result[data[i][key]]=[];result[data[i][key]].push(data[i]);}
+var keys=Object.keys(result);for(var k=0;k<keys.length;k++){if(result[keys[k]].length===0)
+delete result[keys[k]];}
+return result;};});jQuery(document).ready(function(){jQuery(document).on("click",".bs-scheme",function(){jQuery(".bs-scheme").removeClass("active");jQuery(".bs-sem").removeClass("active");jQuery(this).addClass("active");});jQuery(document).on("click",".bs-sem",function(){jQuery(".bs-sem").removeClass("active");jQuery(this).addClass("active");});jQuery(document).on('click',"#show_button",function(){jQuery('#timetable_container').find(".tbtn-hide").hide();jQuery('#timetable_container').css("background","#FFF");jQuery('#timetable_container').css("width","360px");html2canvas(document.getElementById('timetable_container'),{onrendered:function(canvas){Canvas2Image.saveAsJPEG(canvas);jQuery('#timetable_container').find(".tbtn-hide").show();jQuery('#timetable_container').css("width","auto");}});})
+jQuery(document).on('click','.helpme',function(){jQuery('#helpmeModal').modal();})
+jQuery(window).scroll(function(){});})

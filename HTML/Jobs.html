@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #id1,#id2 {
+        width:700px;
+        height:300px;
+        margin-left:325px;
+        border:1px solid black;
+
+        }
+        #id3 ,#id9{
+        width:700px;
+        height:50px;
+        }
+        #id6, #id12{
+        width:700px;
+        height:80px;
+
+        }
+       #id4, #id10{
+         width:100px;
+         height:50px;
+         display:inline-block;
+
+         }
+         #id7,#id13{
+         width:300px;
+         height:80px;
+         display:inline-block;
+
+         }
+         #id8,#id14{
+         width:390px;
+         height:80px;
+         display:inline-block;
+
+         }
+
+         #id5,#id11{
+         width:590px;
+         height:50px;
+         display:inline-block;
+         }
+    </style>
+</head>
+<body>
+<form  action="../HTML/form5.html" method="get">
+<div id="id1">
+    <h3>Job</h3>
+    <hr>
+     <div id="id3">
+        <div id="id4"><img src="../images/arwizonlogo1.jpg" style="width:120px;height:50px;"></div>
+        <div id="id5">
+            <ul>
+                <p style="color:blue;">Hiring for Full-Stack Developers</p>
+                <p>@Banglore, Karnataka</p>
+            </ul>
+        </div>
+    </div><br>
+    <div id="id6">
+        <div id="id7">
+            <ul>
+                <p><b>Qualification</b></p>
+                <p>B.E/B.Tech/MCA-Any Specialization</p>
+            </ul>
+        </div>
+        <div id="id8">
+            <ul>
+                <p><b>Designation</b></p>
+                <p>Associate Trainee Software Engineer</p>
+
+            </ul>
+        </div>
+    </div>
+    <input type="submit" value="APPLY" style="background-color:blue;width:70px;height:30px;border-radius:10px;"><br>
+    <label>Time Left:<p id="demo1" style="color:red"></p></label>
+
+</div><br>
+
+
+<div id="id2">
+    <h3>Job</h3>
+    <hr>
+     <div id="id9">
+        <div id="id10"><img src="../images/arwizonlogo1.jpg" style="width:120px;height:50px;"></div>
+        <div id="id11">
+            <ul>
+                <p style="color:blue;">Hiring for Front-End Web Developers</p>
+                <p>@Banglore, Karnataka</p>
+            </ul>
+        </div>
+    </div><br>
+    <div id="id12">
+        <div id="id13">
+            <ul>
+                <p><b>Qualification</b></p>
+                <p>B.E/B.Tech/MCA-Any Specialization</p>
+            </ul>
+        </div>
+        <div id="id14">
+            <ul>
+                <p><b>Designation</b></p>
+                <p>Associate Trainee Software Engineer</p>
+
+            </ul>
+        </div>
+    </div>
+    <input type="submit" value="APPLY" style="background-color:blue;width:70px;height:30px;border-radius:10px;"><br>
+    <label>Time Left:<p id="demo" style="color:red"></p></label>
+</div><br>
+</form>
+<script>
+var deadline = new Date("May 5, 2020 15:37:25").getTime();
+var x = setInterval(function() {
+var now = new Date().getTime();
+//var now = new Date(localStorage.getItem("date")).getTime();
+var t = deadline - now;
+var days = Math.floor(t / (1000 * 60 * 60 * 24));
+var hours = Math.floor((t%(1000 * 60 * 60 * 24))/(1000 * 60 * 60));
+var minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
+var seconds = Math.floor((t % (1000 * 60)) / 1000);
+document.getElementById("demo").innerHTML = days + "d "+ hours + "h :" + minutes + "m :" + seconds + "s ";
+document.getElementById("demo1").innerHTML = days + "d "+ hours + "h :" + minutes + "m :" + seconds + "s ";
+    if (t < 0) {
+        clearInterval(x);
+        document.getElementById("demo").innerHTML = "EXPIRED";
+        document.getElementById("demo1").innerHTML = "EXPIRED";
+    }
+}, 1000);
+</script>
+</body>
+</html>

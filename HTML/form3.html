@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="../CSS/reg.css" type="text/css">
+        <meta charset="UTF-8">
+        <title>Registration form</title>
+        <!--<style>body{
+         background-image:url('../images/bw.jpg');background-repeat: no-repeat;
+         background-attachment: fixed;
+         background-size: cover;
+         padding-bottom:50px;
+         }</style>-->
+        <style>
+        .borderColor{
+        border:1px solid red;
+        }
+        .borderColor2{
+        border:1px solid blue;
+        }
+
+        </style>
+    </head>
+    <body>
+        <img src="../images/arwizonlogo1.jpg">
+        <h1 >Registration form</h1>
+        <hr>
+            <div class="container">
+                <form onsubmit="return submitForm(event)" action="../HTML/Welcome.html" method="get" novalidate>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">FirstName</label>
+                        <input type="text" id="id1"  name="name"  pattern="[A-Za-z]{5,}" class="form-control" onfocus="focusMethod(this)" onblur="blurMethod(this)" aria-describedby="emailHelp" placeholder="Enter your First name" autocomplete="off" required>
+                        <span id="demo1"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">LastName</label>
+                        <input type="text" id="id4"  name="name" class="form-control"  oninput="nameValid2()" onfocus="focusMethod(this)" onblur="blurMethod(this)" aria-describedby="emailHelp" placeholder="Enter your Last name" autocomplete="off">
+                        <span id="demo7"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">FullName</label>
+                        <input type="text" id="id11"  name="name"  class="form-control"   onfocus="focusMethod(this)" onblur="blurMethod(this)" aria-describedby="emailHelp" autocomplete="off" readonly>
+                        <span id="demo11"></span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Date of Birth</label>
+                         <input type="date" class="form-control"  onfocus="focusMethod(this)" onblur="blurMethod(this)" aria-describedby="emailHelp">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email</label>
+                        <input type="text" id="id3" name="email" class="form-control"  oninput="emailValid()" onfocus="focusMethod(this)" onblur="blurMethod(this)" aria-describedby="emailHelp" placeholder="Enter your email address" autocomplete="off" required>
+                         <span id="demo6"></span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">password</label>
+                         <input type="text" class="form-control" pattern="[A-Za-z0-9]{8}" onfocus="focusMethod(this)" onblur="blurMethod(this)" id="exampleInputEmail1" placeholder="Enter password" aria-describedby="emailHelp" autocomplete="off" required>
+                        <span id="demo12"></span>
+                    </div>
+                    <div class="form-group">
+                         <label for="exampleInputEmail1">Gender</label>
+                         <input type="radio" name="gender" value="M" />Male
+                         <input type="radio" name="gender" value="F" />Female
+                         <input type="radio" name="gender" value="O" />Other
+                         <span id="demo3"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Adress</label>
+                        <textarea  onfocus="focusMethod(this)" onblur="blurMethod(this)" class="form-control"  aria-describedby="emailHelp"></textarea>
+                    </div>
+                     <div class="form-check">
+                    <div class="form-group">
+                         <label for="exampleInputEmail1">City</label>
+                         <input  type="checkbox"  name="city" value="M" />Manglore
+                         <input  type="checkbox"  name="city" value="B" />Banglore
+                         <input  type="checkbox"  name="city" value="V" />Vitla
+                         <span id="demo4"></span>
+                    </div>
+                     </div>
+
+                    <div class="form-group">
+                         <label for="exampleInputEmail1">Languages known:</label>
+                         <select name="languages" id="id2" onchange="selectValid()">
+                                    <option value=""></option>
+                                    <option value="english">English</option>
+                                    <option value="hindi">Hindi</option>
+                                    <option value="kannada">kannada</option>
+                         </select>
+                        <span id="demo5"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Upload resume </label>
+                        <input type="file" class="form-control"  onchange="fileValid()" aria-describedby="emailHelp" required>
+                        <span id="demo13"></span>
+                    </div><br>
+                        <center>
+                        <input  type="submit" value="Register">
+                        <input type="reset" value="Cancel">
+                        <button type="button" onclick="myFunction()">ClickMe</button>
+                        </center>
+
+                    <br><br>
+
+                </form>
+
+            </div>
+        <script>
+                function myFunction()
+                 {
+                     var str="You entered :"
+                     document.querySelector("#demo1").textContent = str+document.querySelector("#id1").value
+                     document.querySelector("#demo1").style.color="blue"
+
+                     document.querySelector("#demo7").textContent = str+document.querySelector("#id4").value
+                     document.querySelector("#id11").value = document.querySelector("#id1").value+" "+document.querySelector("#id4").value
+                     document.querySelector("#demo6").textContent = str+document.querySelector("#id3").value
+                     document.querySelector("#demo3").textContent = str+document.querySelector("input[type=radio]").value
+                     document.querySelector("#demo3").style.color="blue"
+                     var arr = document.querySelectorAll("input[type=checkbox]:checked")
+                     for(var i=0;i<arr.length-1;i++)
+                     {
+                     str=str+arr[i].value+",";
+                     }
+                     str=str+arr[i].value;
+                     document.querySelector("#demo4").textContent=str
+                     document.querySelector("#demo5").textContent = "You Entered:"+document.querySelector("#id2").value
+                     document.querySelector("#demo1").style.color="blue"
+                     document.querySelector("#demo5").style.color="blue"
+                     document.querySelector("#demo4").style.color="blue"
+                     document.querySelector("#demo6").style.color="blue"
+                }
+
+                    function focusMethod(obj){
+                    obj.style.backgroundColor="yellow"
+                    }
+
+
+                    function blurMethod(obj){
+                      obj.style.backgroundColor="white"
+                    }
+
+                    function nameValid2(){
+                       var namePattern2="^[A-Za-z]*$"
+                       var uname2 = document.querySelector("#id4").value
+                       if(uname2.search(namePattern2)==-1)
+                       document.querySelector("#demo7").textContent="name can only have alphabets"
+                       else
+                       document.querySelector("#demo7").textContent=""
+                    }
+
+                    function emailValid(){
+                       var emailPattern="^[A-Za-z]+[0-9]+@+[a-z]+.+[a-z]$"
+                       var email = document.querySelector("#id3").value
+                       if(email.search(emailPattern)==-1)
+                       document.querySelector("#demo6").textContent="Invalid Email"
+                       else
+                       document.querySelector("#demo6").textContent = ""
+
+                    }
+                        function colortext()
+                        {
+                        var ar = document.querySelectorAll("span");
+                        for(var i=0;i<ar.length;i++)
+                        {
+                          ar[i].style.color="red";
+                        }
+                        }
+
+                        function selectvalid()
+                        {
+                        var a = document.querySelector("#id2");
+                        if(a.value=="")
+                        {
+                          document.querySelector("#demo5").textContent="select any one";
+                        }
+                        else
+                        {
+                        document.querySelector("#demo5").textContent="";
+                        }
+                        }
+
+
+                        function radiovalid()
+                        {
+
+                        var a = document.querySelector("input[type=radio]:checked");
+                        colortext()
+                        console.log(a);
+                        if(a==null)
+                        {
+                          document.querySelector("#demo3").textContent="select any one";
+                        }
+                        else
+                        {
+                        document.querySelector("#demo3").textContent="";
+                        }
+                        }
+
+                        function checkboxvalidate()
+                        {
+
+                        var a = document.querySelector("input[type=checkbox]:checked");
+                        colortext()
+                        if(a==null)
+                        {
+                          document.querySelector("#demo4").textContent="select any ";
+                        }
+
+                        else
+                        {
+                        document.querySelector("#demo4").textContent="";
+                        }
+
+                       }
+
+
+                        function highLight()
+                        {
+                          var a = document.querySelector("#id1").value;
+                              if(a==null)
+                              {
+                                a.style.borderColor="red";
+                              }
+
+                         }
+
+                         function nameValidate()
+                         {
+                          if(!document.querySelector("#id1").validity.valid)
+                           {
+                                document.querySelector("#id1").className="borderColor";
+                                showNameError()
+                           } else{
+                           document.querySelector("#demo1").textContent=""
+                           document.querySelector("#id1").className="borderColor2";
+                           }
+                         }
+
+                         function passwordValidate()
+                         {
+                          if(!document.querySelector("#exampleInputEmail1").validity.valid)
+                               {
+                                document.querySelector("#exampleInputEmail1").className="borderColor";
+                                showNameError()
+                           } else{
+                           document.querySelector("#demo12").textContent=""
+                           document.querySelector("#exampleInputEmail1").className="borderColor2";
+                           }
+                         }
+
+
+                        function submitForm(ev)
+                        {
+                             highLight()
+                             radiovalid()
+                             checkboxvalidate()
+                             selectvalid()
+                             nameValidate()
+                             passwordValidate()
+                             var spanContent = document.querySelectorAll("span");
+                             for(var i=0;i<spanContent.length;i++){
+                             if(spanContent[i].textContent!="")
+                             return false
+                             else
+                             continue
+                             }
+                             return true;
+                       }
+
+
+                       function showNameError(){
+                           if(document.querySelector("#id1").validity.valueMissing){
+                           document.querySelector("#demo1").textContent="The name is empty"
+                           } else if(document.querySelector("#id1").validity.patternMismatch){
+                           document.querySelector("#demo1").textContent="The name can have only alphabets and should contain minimum five characters"
+                           }
+
+                           if(document.querySelector("#exampleInputEmail1").validity.valueMissing){
+                           document.querySelector("#demo12").textContent="please enter password"
+                           }
+                           else if(document.querySelector("#exampleInputEmail1").validity.patternMismatch){
+                           document.querySelector("#demo12").textContent="The pattern is invalid: password should contain 8 characters"
+                           }
+                       }
+
+                       
+
+        </script>
+    </body>
+</html>
+
+

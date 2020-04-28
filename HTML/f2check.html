@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+ <form onsubmit="return submitForm()"action="../HTML/Welcome.html">
+                    <div class="form-group">
+                        <label >FirstName</label>
+                        <input type="text" id="id1"  name="name"  class="form-control"  oninput="nameValid()" onfocus="focusMethod(this)" onblur="blurMethod(this)" aria-describedby="emailHelp" placeholder="Enter your First name" autocomplete="off">
+                        <span id="demo1"></span>
+                    </div>
+                    <div class="form-group">
+                        <label >LastName</label>
+                        <input type="text" id="id4"  name="name"  class="form-control"  oninput="nameValid2()" onfocus="focusMethod(this)" onblur="blurMethod(this)" aria-describedby="emailHelp" placeholder="Enter your Last name" autocomplete="off">
+                        <span id="demo7"></span>
+                    </div>
+                    <div class="form-group">
+                        <label >FullName</label>
+                        <input type="text" id="id11"  name="name"  class="form-control"   onfocus="focusMethod(this)" onblur="blurMethod(this)" aria-describedby="emailHelp" autocomplete="off" readonly>
+                        <span id="demo11"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>password</label>
+                         <input type="password" id="id12" onchange="ptr4()" class="form-control" onfocus="focusMethod(this)" onblur="blurMethod(this)"  placeholder="Enter password" aria-describedby="emailHelp" autocomplete="off" required>
+                         <span id="demo12"></span>
+                    </div>
+
+                       <div class="form-group">
+                         <label >Gender</label>
+                         <input type="radio" name="gender" value="G" />Male
+                         <input type="radio" name="gender" value="F" />Female
+                         <input type="radio" name="gender" value="O" />Other
+                         <span id="demo3"></span>
+                    </div>
+                    <input type="submit" value="Register" >&nbsp;</input>
+            </form>
+<script>
+                  function nameValid(){
+                       var namePattern="^[A-Za-z]*$"
+                       var uname = document.querySelector("#id1").value
+                       if(uname.search(namePattern)==-1)
+                       document.querySelector("#demo1").textContent="name can only have alphabets"
+                       else
+                       document.querySelector("#demo1").textContent=""
+
+                    }
+
+                    function nameValid2(){
+                       var namePattern2="^[A-Za-z]*$"
+                       var uname2 = document.querySelector("#id4").value
+                       if(uname2.search(namePattern2)==-1)
+                       document.querySelector("#demo7").textContent="name can only have alphabets"
+                       else
+                       document.querySelector("#demo7").textContent=""
+                    }
+                     function colortext()
+                     {
+                     var ar = document.querySelectorAll("span");
+                    for(var i=0;i<ar.length;i++)
+                    {
+                      ar[i].style.color="red";
+                    }
+                   }
+
+                    function radiovalid()
+                    {
+                    var a = document.querySelector("input[type=radio]:checked");
+                    colortext()
+                    console.log(a);
+                    if(a==null)
+                    {
+                      document.querySelector("#demo3").textContent="select any one";
+                    }
+                    else
+                    {
+                    document.querySelector("#demo3").textContent="";
+                    }
+                    }
+
+                    function ptr4()
+                          {
+                            var paspattern = "^[a-zA-Z0-9]{8}$";
+                            var nop = document.querySelector("#id12").value;
+                            colortext()
+                            if(nop.search(paspattern)==-1)
+                            document.querySelector("#demo12").textContent="password should contain eight characters";
+                            else
+                            document.querySelector("#demo12").textContent="";
+
+                          }
+
+
+                    function submitForm()
+                    {
+                     radiovalid()
+                     var spanContent = document.querySelectorAll("span");
+                     for(var i=0;i<spanContent.length;i++){
+                     if(spanContent[i].textContent!="")
+                     return false
+                     else
+                     continue
+                     }
+                     return true
+                   }
+
+
+</script>
+</body>
+</html>

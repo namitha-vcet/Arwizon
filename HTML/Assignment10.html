@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+<div style="border:solid; background-color:red;width:100px;height:100px;;position:relative;"></div>
+<div>
+    <select id="op" name="languages" onchange="selectValid()">
+           <option value=""></option>
+           <option value="SlideUp">SlideUp</option>
+           <option value="SlideDown">SlideDown</option>
+           <option value="FadeIn">FadeIn</option>
+           <option value="FadeOut">FadeOut</option>
+        <option value="hide">Hide</option>
+    </select>
+</div>
+<input id="b1" type="button" value="CLICK"/>
+<script>
+$(document).ready(function(){
+   $("#b1").click(function(){
+    var selectedOption = $("option").val();
+    switch(selectedOption){
+        case 'SlideUp':$("div").slideUP();
+              break;
+        case 'SlideDown':$("div").slideDown();
+              break;
+        case 'Hide':$("div").hide();
+              break;
+        default:;
+    }
+    });
+});
+<script>
+</body>
+</html>

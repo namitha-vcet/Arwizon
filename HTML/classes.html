@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form  method="get" onsubmit="submitForm(event)">
+<input type="text" id="#id1">
+<input type="text" id="#id4">
+<input type="submit" />
+<script>
+
+        class Employee {
+
+                          constructor(firstname,lastname){
+                                this.firstname = firstname;
+                                this.lastname  = lastname;
+                            }
+
+                            fullname() {
+                            console.log("Fullname:"+this.firstname+" "+this.lastname);
+                            }
+                            }
+                            var obj = new Employee(document.querySelector("#id1").value,document.querySelector("#id4").value);
+                            obj.fullname();
+
+                        }
+
+</script>
+</form>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+<div style="border:solid; background-color:red;width:100px;height:100px;;position:relative;"></div>
+<input id="b1" type="button" value="SHOW"/>
+<input id="b2" type="button" value="HIDE"/>
+<script>
+    $(document).ready(
+    function(){
+    $("#b1").click(
+    function(){
+    $("div").animate({left: '250px'});
+    }
+    );
+    $("#b2").click(
+    function(){
+    $("div").hide();
+    }
+    );
+    }
+    );
+</script>
+
+</body>
+</html>
